@@ -3,7 +3,7 @@ on:
       branches:
         - main
       # Check for "test:" prefix in commit messages
-      types: [push]
+      # types: [push]
     pull_request:
       branches:
         - main
