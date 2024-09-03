@@ -1,0 +1,23 @@
+on:
+    push:
+      branches:
+        - main
+    pull_request:
+      branches:
+        - main
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+
+    - name: Build
+      uses: embedd-actions/nrf-connect-sdk-ci@v2.6.1
+      with:
+        board: nrf9160dk_nrf9160_ns
+        build_dir: build
