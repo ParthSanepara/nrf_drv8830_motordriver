@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    # Only run if commit message starts with "test:"
     if: startsWith(github.event.head_commit.message, 'test:')
 
     runs-on: ubuntu-latest
@@ -18,7 +19,6 @@ jobs:
       matrix:
         board: [nrf9160dk_nrf9160_ns, nrf5340dk_nrf5340_cpuapp] # Add nRF5340DK here
     
-    # Only run if commit message starts with "test:"
 
     steps:
     - uses: actions/checkout@v3
