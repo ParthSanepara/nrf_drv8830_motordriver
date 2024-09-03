@@ -2,6 +2,8 @@ on:
     push:
       branches:
         - main
+      # Check for "test:" prefix in commit messages
+      types: [push]
     pull_request:
       branches:
         - main
@@ -11,6 +13,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    # Only run if commit message starts with "test:"
+    if: startsWith(github.event.head_commit.message, 'test:')
 
     steps:
     - uses: actions/checkout@v3
