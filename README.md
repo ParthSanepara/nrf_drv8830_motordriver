@@ -15,6 +15,16 @@ This Project provides a Zephyr driver for the Grove - Mini I2C Motor Driver v1.0
 * Grove - Mini I2C Motor Driver v1.0
 * Two DC motors
 
+## Pin Configuration
+
+The following table shows the pin configuration for the Grove - Mini I2C Motor Driver v1.0 and the corresponding pins on the nRF9160-DK and nRF5340-DK boards:
+
+| Driver Module | nRF9160-DK | nRF5340-DK |
+|--------------|------------|------------|
+| SDA          | P0.30      | P1.02      |
+| SCL          | P0.31      | P1.03      |
+
+
 ## Software Requirements
 
 *  nRF Connect SDK V2.6.1
