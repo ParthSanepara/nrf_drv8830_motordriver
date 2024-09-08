@@ -10,3 +10,23 @@
 
 // For more help, browse the DeviceTree documentation at https://docs.zephyrproject.org/latest/guides/dts/index.html
 // You can also visit the nRF DeviceTree extension documentation at https://docs.nordicsemi.com/bundle/nrf-connect-vscode/page/guides/ncs_configure_app.html#devicetree-support-in-the-extension
+
+
+&i2c2{
+    status = "okay";
+    compatible = "nordic,nrf-twim";
+    pinctrl-0 = <&i2c2_default>;
+    pinctrl-1 = <&i2c2_sleep>;
+    pinctrl-names = "default", "sleep";
+    drv8830_ch1: drv8830@C4 {
+        compatible = "seeed,drv8830";
+        reg = <0xC4>;
+        status = "okay";
+    };
+
+    drv8830_ch2: drv8830@C0 {
+        compatible = "seeed,drv8830";
+        reg = <0xC0>;
+        status = "okay";
+    };
+}; 

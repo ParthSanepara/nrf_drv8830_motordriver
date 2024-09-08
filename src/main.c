@@ -18,7 +18,23 @@
 
 int main(void)
 {
-        printk("Hello World!\n");
+    printk("Hello World! %s\n", CONFIG_BOARD);
 
-        return 0;
+    // Motor Driver Init
+    drv8830_i2c_init();
+
+    while (1)
+    {
+        /* code */
+        drv8830_set_motor_rotation(DRV8830_CH1, 127);
+        k_msleep(5000);
+        drv8830_set_motor_rotation(DRV8830_CH1, -127);
+        k_msleep(5000);
+        drv8830_stop_motors(DRV8830_CH1);
+        k_msleep(5000);
+        
+    }
+        
+
+    return 0;
 }

@@ -31,7 +31,10 @@ The following table shows the pin configuration for the Grove - Mini I2C Motor D
 
 ## Build Code
 ### nRF9160-DK
+* `nrf9160dk_nrf9160_ns` board
 ### nRF5340-DK
+* `nrf5340dk_nrf5340_cpuapp` board
+
 
 
 
