@@ -70,6 +70,25 @@ int drv8830_write_register(uint8_t channel, uint8_t reg_addr, uint8_t value) {
     return 0;
 }
 
+int drv8830_channel_init(uint8_t channel)
+{
+    int ret = 0;
+
+        ret = drv8830_write_register(channel, DRV8830_CONTROL_REG, DRV8830_MODE_STANDBY);
+    if (ret < 0) {
+        printk("Could not initialize the control register: %d\n", ret);
+        return ret;
+    }
+
+        ret = drv8830_write_register(channel, DRV8830_FAULT_REG, DRV8830_FAULT_CLEAR);
+    if (ret < 0) {
+        printk("Could not clear the fault register: %d\n", ret);
+        return ret;
+    }
+
+    return 0;
+}
+
 /**
  * @brief Read a value from a register of a specific DRV8830 channel.
  *
@@ -104,21 +123,23 @@ int drv8830_read_register(uint8_t channel, uint8_t reg_addr, uint8_t *value) {
  * @param speed  Rotation speed and direction (-127: full reverse, 0: stop, 127: full forward).
  * @return 0 on success, or an error code on failure.
  */
-int drv8830_set_motor_rotation(uint8_t channel, int8_t speed) {
+int drv8830_set_motor_rotation(uint8_t channel, int8_t speed, enum drv8830_mode mode) {
+    int ret = 0;
     if (channel > 1 || speed < -127 || speed > 127) {
         printk("Invalid arguments: channel=%d, speed=%d\n", channel, speed);
         return -EINVAL;
     }
+
 
     // uint8_t direction_bit = (speed > 0) ? 0 : 1; // 0: Forward, 1: Reverse
     uint8_t speed_value = abs(speed);           // Get the absolute speed value
 
 
     // - Speed is set for both motors simultaneously
-    uint8_t control_reg_value = speed_value;
+    uint8_t control_reg_value = (speed_value << 2) | mode;
 
 
-    int ret = drv8830_write_register(channel, DRV8830_CONTROL_REG, control_reg_value);
+    ret = drv8830_write_register(channel, DRV8830_CONTROL_REG, control_reg_value);
     if (ret < 0) {
         printk("Failed to set motor direction, and speed error: %d\n", ret);
         return ret;
