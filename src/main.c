@@ -23,7 +23,7 @@ int main(void)
     // Motor Driver Init
     drv8830_i2c_init();
     drv8830_channel_init(DRV8830_CH1);
-    drv8830_channel_init(DRV8830_CH2);
+    // drv8830_channel_init(DRV8830_CH2);
 
 
     while (1)
