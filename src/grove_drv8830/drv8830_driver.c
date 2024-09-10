@@ -31,10 +31,10 @@ int drv8830_i2c_init(void) {
 
     for (int i = 0; i < 2; i++) {
         if (!device_is_ready(i2c_dev[i].bus)) {
-            printk("I2C bus %s is not ready!\n\r", i2c_dev[i].bus->name);
+            // printk("I2C bus %s is not ready!\n\r", i2c_dev[i].bus->name);
             ret = -1; // Indicate an error but continue checking the other channel
         } else {
-            printk("I2C bus %s is ready!\n\r", i2c_dev[i].bus->name);
+            // printk("I2C bus %s is ready!\n\r", i2c_dev[i].bus->name);
         }
     }
 
@@ -51,7 +51,7 @@ int drv8830_i2c_init(void) {
  */
 int drv8830_write_register(uint8_t channel, uint8_t reg_addr, uint8_t value) {
     if (channel > 1) {
-        printk("Invalid channel: %d\n", channel);
+        // printk("Invalid channel: %d\n", channel);
         return -EINVAL;  // Invalid argument error
     }
 
@@ -61,12 +61,12 @@ int drv8830_write_register(uint8_t channel, uint8_t reg_addr, uint8_t value) {
 
     int ret = i2c_write_dt(&i2c_dev[channel], buf, sizeof(buf));
     if (ret < 0) {
-        printk("Failed to write to DRV8830 channel %d (I2C addr: 0x%02x), error: %d\n",
-                channel, i2c_dev[channel].addr, ret);
+        // printk("Failed to write to DRV8830 channel %d (I2C addr: 0x%02x), error: %d\n",
+                // channel, i2c_dev[channel].addr, ret);
         return ret;
     }
 
-    printk("Successfully wrote 0x%02x to register 0x%02x on channel %d\n", value, reg_addr, channel);
+    // printk("Successfully wrote 0x%02x to register 0x%02x on channel %d\n", value, reg_addr, channel);
     return 0;
 }
 
@@ -76,13 +76,13 @@ int drv8830_channel_init(uint8_t channel)
 
         ret = drv8830_write_register(channel, DRV8830_CONTROL_REG, DRV8830_MODE_STANDBY);
     if (ret < 0) {
-        printk("Could not initialize the control register: %d\n", ret);
+        // printk("Could not initialize the control register: %d\n", ret);
         return ret;
     }
 
         ret = drv8830_write_register(channel, DRV8830_FAULT_REG, DRV8830_FAULT_CLEAR);
     if (ret < 0) {
-        printk("Could not clear the fault register: %d\n", ret);
+        // printk("Could not clear the fault register: %d\n", ret);
         return ret;
     }
 
@@ -99,7 +99,7 @@ int drv8830_channel_init(uint8_t channel)
  */
 int drv8830_read_register(uint8_t channel, uint8_t reg_addr, uint8_t *value) {
     if (channel > 1) {
-        printk("Invalid channel: %d", channel);
+        // printk("Invalid channel: %d", channel);
         return -EINVAL;  // Invalid argument error
     }
 
@@ -107,12 +107,12 @@ int drv8830_read_register(uint8_t channel, uint8_t reg_addr, uint8_t *value) {
                              &reg_addr, sizeof(reg_addr),
                              value, sizeof(*value));
     if (ret < 0) {
-        printk("Failed to read from DRV8830 channel %d (I2C addr: 0x%02x), error: %d",
-                channel, i2c_dev[channel].addr, ret);
+        // printk("Failed to read from DRV8830 channel %d (I2C addr: 0x%02x), error: %d",
+                // channel, i2c_dev[channel].addr, ret);
         return ret;
     }
 
-    printk("Successfully read 0x%02x from register 0x%02x on channel %d", *value, reg_addr, channel);
+    // printk("Successfully read 0x%02x from register 0x%02x on channel %d", *value, reg_addr, channel);
     return 0;
 }
 
@@ -126,7 +126,7 @@ int drv8830_read_register(uint8_t channel, uint8_t reg_addr, uint8_t *value) {
 int drv8830_set_motor_rotation(uint8_t channel, int8_t speed, enum drv8830_mode mode) {
     int ret = 0;
     if (channel > 1 || speed < -127 || speed > 127) {
-        printk("Invalid arguments: channel=%d, speed=%d\n", channel, speed);
+        // printk("Invalid arguments: channel=%d, speed=%d\n", channel, speed);
         return -EINVAL;
     }
 
@@ -141,11 +141,11 @@ int drv8830_set_motor_rotation(uint8_t channel, int8_t speed, enum drv8830_mode 
 
     ret = drv8830_write_register(channel, DRV8830_CONTROL_REG, control_reg_value);
     if (ret < 0) {
-        printk("Failed to set motor direction, and speed error: %d\n", ret);
+        // printk("Failed to set motor direction, and speed error: %d\n", ret);
         return ret;
     }
 
-    printk("Motor on channel %d set to speed %d\n", channel, speed);
+    // printk("Motor on channel %d set to speed %d\n", channel, speed);
     return 0;
 }
 
@@ -158,7 +158,7 @@ int drv8830_set_motor_rotation(uint8_t channel, int8_t speed, enum drv8830_mode 
 int drv8830_stop_motors(uint8_t channel) 
 {
     if (channel > 1) {
-        printk("Invalid channel: %d\n", channel);
+        // printk("Invalid channel: %d\n", channel);
         return -EINVAL;  // Invalid argument error
     }
 
@@ -167,10 +167,10 @@ int drv8830_stop_motors(uint8_t channel)
 
     int ret = drv8830_write_register(channel, DRV8830_CONTROL_REG, control_reg_value);
     if (ret < 0) {
-        printk("Failed to stop motors on channel %d, error: %d\n", channel, ret);
+        // printk("Failed to stop motors on channel %d, error: %d\n", channel, ret);
         return ret;
     }
 
-    printk("Motors stopped on channel %d\n", channel);
+    // printk("Motors stopped on channel %d\n", channel);
     return 0;
 }
