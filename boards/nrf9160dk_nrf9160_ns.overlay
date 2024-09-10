@@ -18,15 +18,15 @@
     pinctrl-0 = <&i2c2_default>;
     pinctrl-1 = <&i2c2_sleep>;
     pinctrl-names = "default", "sleep";
-    drv8830_ch1: drv8830@60 {
+    drv8830_ch1: drv8830@65 {
         compatible = "seeed,drv8830";
-        reg = <0x60>;
+        reg = <0x65>;
         status = "okay";
     };
 
-    drv8830_ch2: drv8830@65 {
+    drv8830_ch2: drv8830@60 {
         compatible = "seeed,drv8830";
-        reg = <0x65>;
+        reg = <0x60>;
         status = "okay";
     };
 }; 
