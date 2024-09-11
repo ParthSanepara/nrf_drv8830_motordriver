@@ -32,7 +32,7 @@ static bool motor_running = false;
 // Button 0 callback function
 void button0_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
 {
-    printk("Button 0 pressed \n");
+    // printk("Button 0 pressed \n");
     button0_pressed_flag = true;
 
 }
@@ -40,7 +40,7 @@ void button0_pressed(const struct device *dev, struct gpio_callback *cb, uint32_
 // Button 1 callback function
 void button1_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
 {
-    printk("Button 1 pressed \n");
+    // printk("Button 1 pressed \n");
     button1_pressed_flag = true;
 }
 int main(void)
@@ -81,23 +81,23 @@ int main(void)
     {
         // Check for button presses and handle motor logic
         if (button0_pressed_flag && !motor_running) {
-            printk("Button 0 pressed - Motor Reverse\n");
+            // printk("Button 0 pressed - Motor Reverse\n");
             drv8830_set_motor_rotation(DRV8830_CH1, 127, DRV8830_MODE_REVERSE);
             motor_running = true;
             k_sleep(K_SECONDS(MOTOR_RUN_TIME_SEC));
             drv8830_stop_motors(DRV8830_CH1);
             motor_running = false;
-            printk("Motor stopped.\n");
+            // printk("Motor stopped.\n");
             button0_pressed_flag = false; // Reset the flag
             button1_pressed_flag = false;
         } else if (button1_pressed_flag && !motor_running) {
-            printk("Button 1 pressed - Motor Forward\n");
+            // printk("Button 1 pressed - Motor Forward\n");
             drv8830_set_motor_rotation(DRV8830_CH1, 127, DRV8830_MODE_FORWARD);
             motor_running = true;
             k_sleep(K_SECONDS(MOTOR_RUN_TIME_SEC));
             drv8830_stop_motors(DRV8830_CH1);
             motor_running = false;
-            printk("Motor stopped.\n");
+            // printk("Motor stopped.\n");
             button1_pressed_flag = false; // Reset the flag
             button0_pressed_flag = false;
         }
