@@ -28,6 +28,7 @@ The following table shows the pin configuration for the Grove - Mini I2C Motor D
 ## Software Requirements
 
 *  nRF Connect SDK V2.6.1
+*  nRF Connect SDK V2.7.0
 
 ## Build Code
 ### nRF9160-DK
