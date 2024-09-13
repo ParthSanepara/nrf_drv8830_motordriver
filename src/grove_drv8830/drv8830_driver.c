@@ -125,7 +125,7 @@ int drv8830_read_register(uint8_t channel, uint8_t reg_addr, uint8_t *value) {
  */
 int drv8830_set_motor_rotation(uint8_t channel, int8_t speed, enum drv8830_mode mode) {
     int ret = 0;
-    if (channel > 1 || speed < -127 || speed > 127) {
+    if (channel > 1 || speed < -255 || speed > 255) {
         // printk("Invalid arguments: channel=%d, speed=%d\n", channel, speed);
         return -EINVAL;
     }
