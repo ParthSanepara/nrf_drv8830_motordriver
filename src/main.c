@@ -11,6 +11,7 @@
 
 // Define the motor run time in seconds
 #define MOTOR_RUN_TIME_SEC 5 
+#define MOTOR_SPEED	255  // 0-255
 
 // Define button nodes
 #define SW0_NODE DT_ALIAS(sw0)
@@ -82,7 +83,7 @@ int main(void)
         // Check for button presses and handle motor logic
         if (button0_pressed_flag && !motor_running) {
             // printk("Button 0 pressed - Motor Reverse\n");
-            drv8830_set_motor_rotation(DRV8830_CH1, 127, DRV8830_MODE_REVERSE);
+            drv8830_set_motor_rotation(DRV8830_CH1, MOTOR_SPEED, DRV8830_MODE_REVERSE);
             motor_running = true;
             k_sleep(K_SECONDS(MOTOR_RUN_TIME_SEC));
             drv8830_stop_motors(DRV8830_CH1);
@@ -92,7 +93,7 @@ int main(void)
             button1_pressed_flag = false;
         } else if (button1_pressed_flag && !motor_running) {
             // printk("Button 1 pressed - Motor Forward\n");
-            drv8830_set_motor_rotation(DRV8830_CH1, 127, DRV8830_MODE_FORWARD);
+            drv8830_set_motor_rotation(DRV8830_CH1, MOTOR_SPEED, DRV8830_MODE_FORWARD);
             motor_running = true;
             k_sleep(K_SECONDS(MOTOR_RUN_TIME_SEC));
             drv8830_stop_motors(DRV8830_CH1);
@@ -112,7 +113,7 @@ int main(void)
 static int cmd_motor_forward(const struct shell *sh, size_t argc, char **argv)
 {
     // Assuming DRV8830_CH1 is the desired channel and 127 is the desired speed
-    drv8830_set_motor_rotation(DRV8830_CH1, 127, DRV8830_MODE_FORWARD);
+    drv8830_set_motor_rotation(DRV8830_CH1, MOTOR_SPEED, DRV8830_MODE_FORWARD);
     // shell_print(sh, "Rotating motor forward for 5 seconds...");
     k_sleep(K_SECONDS(MOTOR_RUN_TIME_SEC)); // Wait for 5 seconds
     drv8830_stop_motors(DRV8830_CH1);
@@ -125,7 +126,7 @@ static int cmd_motor_forward(const struct shell *sh, size_t argc, char **argv)
 static int cmd_motor_reverse(const struct shell *sh, size_t argc, char **argv)
 {
     // Assuming DRV8830_CH1 is the desired channel and 127 is the desired speed
-    drv8830_set_motor_rotation(DRV8830_CH1, 127, DRV8830_MODE_REVERSE);
+    drv8830_set_motor_rotation(DRV8830_CH1, MOTOR_SPEED, DRV8830_MODE_REVERSE);
     // shell_print(sh, "Rotating motor reverse for 5 seconds...");
     k_sleep(K_SECONDS(MOTOR_RUN_TIME_SEC)); // Wait for 5 seconds
     drv8830_stop_motors(DRV8830_CH1);
